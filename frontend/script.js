@@ -58,6 +58,74 @@ async function getRecommendation() {
 }
 
 
+// Only allow absolute http(s) links (blocks javascript: and data: URLs).
+function isSafeUrl(value) {
+    try {
+        const url = new URL(value);
+        return url.protocol === "http:" || url.protocol === "https:";
+    } catch {
+        return false;
+    }
+}
+
+function buildSourceLine(source) {
+
+    const line = document.createElement("p");
+    line.style.fontSize = "13px";
+    line.style.color = "#8491a5";
+
+    if (!source || source.type === "synthetic") {
+        line.textContent =
+            "Source: synthetic demo record (not a real listing)";
+        return line;
+    }
+
+    line.append("Source: ");
+
+    if (isSafeUrl(source.url)) {
+        const link = document.createElement("a");
+        link.href = source.url;
+        link.textContent = source.name || "listing";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        line.appendChild(link);
+    } else {
+        line.append(source.name || "unknown");
+    }
+
+    if (source.fetched_at) {
+        const when = new Date(source.fetched_at);
+        if (!isNaN(when)) {
+            line.append(` · fetched ${when.toLocaleString("en-IN")}`);
+        }
+    }
+
+    return line;
+}
+
+function buildReviewLine(reviews) {
+
+    const line = document.createElement("p");
+    line.style.fontSize = "13px";
+
+    const status = reviews?.status || "missing";
+
+    if (status === "verified") {
+        line.textContent =
+            `Reviews: ${reviews.rating}/5 from ${reviews.count} ` +
+            "reviews (verified source)";
+    } else if (status === "unverified") {
+        line.textContent =
+            `Reviews: ${reviews.rating}/5 listed, but unverified`;
+    } else {
+        line.textContent = "Reviews: not available";
+        line.style.color = "#8491a5";
+    }
+
+    return line;
+}
+
+
 function displayRecommendation(data) {
 
     const results = document.getElementById("results");
@@ -98,6 +166,9 @@ function displayRecommendation(data) {
 
     card.appendChild(reasons);
 
+    card.appendChild(buildSourceLine(winner.source));
+    card.appendChild(buildReviewLine(winner.reviews));
+
     content.appendChild(card);
 
     if (gaming) {
@@ -120,6 +191,12 @@ function displayRecommendation(data) {
             gamingName,
             gamingPrice
         );
+
+        gamingCard.appendChild(buildReviewLine({
+            status: gaming.review_status,
+            rating: gaming.rating,
+            count: gaming.review_count
+        }));
 
         content.appendChild(gamingCard);
     }

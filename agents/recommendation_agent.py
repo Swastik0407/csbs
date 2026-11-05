@@ -2,6 +2,55 @@
 import json
 
 
+def _source_info(product: dict) -> dict:
+    """Where this record came from and when it was fetched."""
+    return {
+        "name": product.get("source_name"),
+        "type": product.get("source_type"),
+        "url": product.get("source_url"),
+        "fetched_at": product.get("fetched_at")
+    }
+
+
+def _review_info(product: dict) -> dict:
+    """Review data, with an explicit status so missing != zero."""
+    return {
+        "status": product.get("review_status", "missing"),
+        "rating": product.get("rating"),
+        "count": product.get("review_count"),
+        "source_url": product.get("review_source_url")
+    }
+
+
+def _disclaimer(winner: dict) -> str:
+    if winner.get("source_type") == "synthetic":
+        return (
+            "This recommendation is based on a demo product "
+            "dataset and heuristic scoring. Prices and product "
+            "specifications are illustrative, not verified live "
+            "marketplace information."
+        )
+    return (
+        "Scores are heuristic and based on catalogue data fetched "
+        "at the time shown. Prices and availability can change; "
+        "check the source link before buying."
+    )
+
+
+def _verification_needed(winner: dict) -> list:
+    items = [
+        "Verify current price and availability.",
+        "Check exact processor model and generation.",
+        "Verify battery runtime through independent tests.",
+        "Check display quality and refresh rate."
+    ]
+    if winner.get("review_status") == "verified":
+        items.append("Check warranty details.")
+    else:
+        items.append("Check customer reviews and warranty.")
+    return items
+
+
 def generate_recommendation(
     decision_result: dict,
     comparison_result: dict,
@@ -81,27 +130,18 @@ def generate_recommendation(
             ),
             "limitations": decision_result.get(
                 "limitations", []
-            )
+            ),
+            "source": _source_info(winner_details),
+            "reviews": _review_info(winner_details)
         },
 
         "gaming_alternative": gaming_alternative,
 
         "other_alternatives": [],
 
-        "important_disclaimer": (
-            "This recommendation is based on a demo product "
-            "dataset and heuristic scoring. Prices and product "
-            "specifications are illustrative, not verified live "
-            "marketplace information."
-        ),
+        "important_disclaimer": _disclaimer(winner_details),
 
-        "verification_needed": [
-            "Verify current price and availability.",
-            "Check exact processor model and generation.",
-            "Verify battery runtime through independent tests.",
-            "Check display quality and refresh rate.",
-            "Check customer reviews and warranty."
-        ]
+        "verification_needed": _verification_needed(winner_details)
     }
 
     # Add remaining products without duplicating the winner
@@ -117,7 +157,9 @@ def generate_recommendation(
                 f"{product['brand']} {product['model']}"
             ),
             "price_inr": product["price_inr"],
-            "overall_score": product["final_score"]
+            "overall_score": product["final_score"],
+            "source": _source_info(product),
+            "reviews": _review_info(product)
         })
 
     print("[Recommendation Agent] Recommendation generated.")
