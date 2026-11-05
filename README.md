@@ -1,1 +1,208 @@
+# 🛍️ ShopMind AI
+### An Autonomous Multi-Agent Shopping Assistant
 
+ShopMind AI is an AI-powered shopping assistant designed to simplify online purchasing decisions through a multi-agent architecture.
+
+Instead of simply responding to product-related questions, ShopMind AI is designed to understand user requirements, discover suitable products, research their specifications, compare alternatives, evaluate trade-offs, and generate explainable recommendations.
+
+The goal is to make product selection more intelligent, personalized, and transparent.
+
+---
+
+## 🚀 Problem Statement
+
+Online marketplaces offer thousands of products with different prices, specifications, performance levels, and customer ratings. Choosing the right product can be overwhelming, especially when buyers have multiple requirements and a limited budget.
+
+Traditional product searches often require users to manually compare specifications and evaluate alternatives.
+
+**ShopMind AI aims to address this problem through an autonomous, multi-agent shopping workflow.**
+
+## ✨ Key Features
+
+- **Natural Language Requirement Understanding:** Interprets shopping requirements expressed in everyday language.
+- **Product Discovery:** Identifies suitable products based on category, budget, and requirements.
+- **Product Research:** Examines available specifications and identifies missing information.
+- **Intelligent Comparison:** Evaluates products using weighted scoring criteria.
+- **Decision Making:** Selects the best overall option and identifies relevant alternatives.
+- **Explainable Recommendations:** Provides reasoning behind product recommendations.
+- **Multi-Agent Architecture:** Divides the shopping workflow into specialized agents.
+
+## 🧠 Multi-Agent Architecture
+
+ShopMind AI consists of six specialized agents that work together through a central orchestrator.
+
+| Agent | Responsibility |
+|---|---|
+| 1. Requirement Agent | Understands the user's natural-language shopping requirements. |
+| 2. Discovery Agent | Finds and filters suitable products from the available product dataset. |
+| 3. Research Agent | Examines product specifications and identifies missing information. |
+| 4. Comparison Agent | Compares products using weighted evaluation criteria. |
+| 5. Decision Agent | Selects the best overall product and relevant alternatives. |
+| 6. Recommendation Agent | Generates the final recommendation with explanations. |
+
+### Workflow
+
+```text
+       USER INPUT
+            |
+            ▼
+   REQUIREMENT AGENT
+            |
+            ▼
+    DISCOVERY AGENT
+            |
+            ▼
+     RESEARCH AGENT
+            |
+            ▼
+    COMPARISON AGENT
+            |
+            ▼
+     DECISION AGENT
+            |
+            ▼
+  RECOMMENDATION AGENT
+            |
+            ▼
+   FINAL RECOMMENDATION
+```
+
+The orchestrator coordinates the agents and passes information between the different stages of the workflow.
+
+## ⚙️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Core application and agent logic |
+| Google Gemini API | Natural-language requirement understanding |
+| FastAPI | Backend API development |
+| HTML | Frontend structure |
+| CSS | User interface styling |
+| JavaScript | Frontend interactions and API communication |
+| Pandas | Product dataset processing |
+| CSV | Demo product data |
+| Pydantic | Structured data validation |
+| Git & GitHub | Version control and project management |
+
+## 📂 Project Structure
+
+```text
+ShopMind-AI/
+│
+├── agents/
+│   ├── requirement_agent.py
+│   ├── discovery_agent.py
+│   ├── research_agent.py
+│   ├── comparison_agent.py
+│   ├── decision_agent.py
+│   └── recommendation_agent.py
+│
+├── tools/
+│   ├── product_search.py
+│   ├── product_research.py
+│   └── scoring_engine.py
+│
+├── data/
+│   └── products.csv
+│
+├── backend/
+│   ├── main.py
+│   └── orchestrator.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── config/
+│   └── settings.py
+│
+├── .env
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
+
+## 🔄 How It Works
+
+### 1. Requirement Understanding
+
+The user describes what they want in natural language.
+
+For example:
+
+> I need a laptop under ₹65,000 for programming, occasional gaming, and college work. Prioritize performance, battery life, and build quality.
+
+The Requirement Agent uses the Gemini API to convert the request into structured requirements, including budget, product category, use cases, and priorities.
+
+### 2. Product Discovery
+
+The Discovery Agent searches the available product dataset and filters products according to the extracted requirements.
+
+### 3. Product Research
+
+The Research Agent examines available specifications such as:
+
+- Processor
+- RAM
+- Storage
+- Graphics
+- Battery capacity
+- Weight
+- Build material
+
+It also identifies specifications and evidence that are unavailable in the dataset.
+
+### 4. Product Comparison
+
+The Comparison Agent evaluates suitable products using a weighted scoring mechanism.
+
+The current laptop evaluation considers:
+
+- Performance
+- Battery capacity
+- Build quality
+- Gaming capability, when relevant
+
+The scoring engine generates comparative scores to support the decision-making process.
+
+### 5. Decision Making
+
+The Decision Agent identifies the best overall match and can select a separate alternative when another product is better suited to a particular use case, such as gaming.
+
+### 6. Final Recommendation
+
+The Recommendation Agent presents the selected product, its advantages, limitations, reasoning, and alternatives.
+
+---
+
+## 🖥️ Getting Started
+
+### Prerequisites
+
+- Python 3.10 or later (use a compatible environment for the installed dependencies).
+- Google Gemini API key for the live requirement-understanding workflow.
+- VS Code or another code editor.
+- Git.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ShopMind-AI.git
+
+cd ShopMind-AI
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+###
