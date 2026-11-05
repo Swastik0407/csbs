@@ -87,15 +87,7 @@ def make_decision(
             "brand": best_product["brand"],
             "model": best_product["model"],
             "price_inr": best_product["price_inr"],
-            "final_score": best_product["final_score"],
-            "source_type": best_product.get("source_type"),
-            "source_name": best_product.get("source_name"),
-            "source_url": best_product.get("source_url"),
-            "fetched_at": best_product.get("fetched_at"),
-            "review_status": best_product.get("review_status", "missing"),
-            "rating": best_product.get("rating"),
-            "review_count": best_product.get("review_count"),
-            "review_source_url": best_product.get("review_source_url")
+            "final_score": best_product["final_score"]
         },
         "decision_reasons": reasons,
         "advantages": best_product.get("research_findings", []),
@@ -113,14 +105,6 @@ def make_decision(
             "brand": gaming_alternative["brand"],
             "model": gaming_alternative["model"],
             "price_inr": gaming_alternative["price_inr"],
-            "source_type": gaming_alternative.get("source_type"),
-            "source_url": gaming_alternative.get("source_url"),
-            "fetched_at": gaming_alternative.get("fetched_at"),
-            "review_status": gaming_alternative.get(
-                "review_status", "missing"
-            ),
-            "rating": gaming_alternative.get("rating"),
-            "review_count": gaming_alternative.get("review_count"),
             "gaming_score": gaming_alternative.get(
                 "score_breakdown", {}
             ).get("gaming", 0),
