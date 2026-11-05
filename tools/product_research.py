@@ -69,10 +69,40 @@ def research_product(product: dict) -> dict:
         "Exact CPU model and generation",
         "Display resolution and refresh rate",
         "GPU power limit (TGP), if applicable",
-        "Verified customer ratings and reviews",
         "Warranty and after-sales information",
         "Independent benchmark results"
     ])
+
+    # Specs the catalogue source did not provide (API sources only).
+    missing_specs = product.get("missing_specs") or []
+    if missing_specs:
+        limitations.append(
+            "Not provided by the source: " + ", ".join(missing_specs)
+        )
+
+    # Reviews: report what exists, and say clearly when it does not.
+    review_status = product.get("review_status", "missing")
+    rating = product.get("rating")
+    review_count = product.get("review_count")
+
+    if review_status == "verified":
+        findings.append(
+            f"Verified rating {rating}/5 from {review_count} reviews "
+            f"(source: {product.get('source_name')})"
+        )
+    elif review_status == "unverified":
+        limitations.append(
+            f"A rating of {rating}/5 is listed but could not be verified "
+            "(no review count or checkable source link)"
+        )
+    else:
+        limitations.append("Customer reviews: not available from this source")
+
+    # Provenance.
+    if product.get("source_type") == "synthetic":
+        limitations.append(
+            "Synthetic demo record: not taken from a real listing"
+        )
 
     return {
         "product_id": product.get("product_id"),
@@ -80,6 +110,7 @@ def research_product(product: dict) -> dict:
             f"{product.get('brand')} {product.get('model')}"
         ),
         "price_inr": product.get("price_inr"),
+        "review_status": review_status,
         "research_findings": findings,
         "limitations": limitations
     }
