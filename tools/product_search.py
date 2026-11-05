@@ -1,4 +1,10 @@
-from tools.providers import load_catalogue
+import pandas as pd
+from pathlib import Path
+
+
+# Locate the CSV relative to the project root.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_FILE = PROJECT_ROOT / "data" / "products.csv"
 
 
 def search_products(requirements: dict, top_k: int = 10) -> list[dict]:
@@ -13,9 +19,12 @@ def search_products(requirements: dict, top_k: int = 10) -> list[dict]:
         A list of matching product dictionaries.
     """
 
-    # Live API if configured, otherwise the local CSV.
-    # Every row carries source and review provenance columns.
-    df = load_catalogue(requirements)
+    if not DATA_FILE.exists():
+        raise FileNotFoundError(
+            f"Product dataset not found: {DATA_FILE}"
+        )
+
+    df = pd.read_csv(DATA_FILE)
 
     # Filter by product category.
     category = str(requirements.get("category", "")).lower().strip()
@@ -130,8 +139,5 @@ def search_products(requirements: dict, top_k: int = 10) -> list[dict]:
 
     # Return only the requested number of products.
     results = df.head(top_k)
-
-    # Missing ratings/URLs must serialize as null, not NaN (invalid JSON).
-    results = results.astype(object).where(results.notna(), None)
 
     return results.to_dict(orient="records")
