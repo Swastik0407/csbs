@@ -1,0 +1,8 @@
+product_id,brand,model,category,price_inr,processor,ram_gb,storage,gpu,display,battery_wh,weight_kg,build,tags
+P001,DemoTech,CreatorBook 14,laptop,58999,Ryzen 7,16,512GB SSD,Integrated Graphics,14 inch,70,1.45,Aluminium,programming;college;multitasking;portable
+P002,DemoTech,GamerBook 15,laptop,64999,Core i5,16,512GB SSD,RTX 3050,15.6 inch,55,2.2,Plastic,gaming;programming;performance
+P003,SampleWorks,PowerBook 15,laptop,61999,Ryzen 5,16,1TB SSD,RTX 2050,15.6 inch,60,2.1,Plastic,gaming;programming;college
+P004,SampleWorks,UltraBook 14,laptop,54999,Core i5,16,512GB SSD,Integrated Graphics,14 inch,75,1.35,Aluminium,programming;college;portable;battery
+P005,DemoTech,EverydayBook 15,laptop,45999,Ryzen 5,8,512GB SSD,Integrated Graphics,15.6 inch,50,1.8,Plastic,college;office;programming
+P006,SampleWorks,PerformanceBook 16,laptop,63999,Ryzen 7,16,512GB SSD,RTX 3050,16 inch,65,2.3,Plastic,gaming;programming;performance;multitasking
+P007,DemoTech,TravelBook 13,laptop,62999,Core i5,16,512GB SSD,Integrated Graphics,13.3 inch,80,1.2,Aluminium,programming;college;portable;battery

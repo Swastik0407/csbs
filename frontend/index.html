@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopMind AI | Smart Shopping Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">ShopMind<span>AI</span></div>
+        <div class="nav-label">AUTONOMOUS SHOPPING ASSISTANT</div>
+    </header>
+
+    <main class="container">
+
+        <section class="hero">
+            <div class="tag">YOUR PERSONAL AI SHOPPER</div>
+            <h1>Smarter shopping.<br><span>Better decisions.</span></h1>
+            <p>
+                Tell us what you need. ShopMind AI researches,
+                compares and recommends the right products for you.
+            </p>
+        </section>
+
+        <section class="search-card">
+            <label for="userInput">What are you looking for?</label>
+
+            <textarea
+                id="userInput"
+                placeholder="Example: I need a laptop under ₹65,000 for programming, occasional gaming and college work. Prioritize performance, battery life and build quality."
+            ></textarea>
+
+            <div class="search-footer">
+                <span>Describe your needs in natural language.</span>
+                <button id="searchButton" onclick="getRecommendation()">
+                    Find my product →
+                </button>
+            </div>
+        </section>
+
+        <section id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <h3>ShopMind AI is working...</h3>
+            <p>Analyzing your requirements and comparing products.</p>
+        </section>
+
+        <section id="error" class="error hidden"></section>
+
+        <section id="results" class="results hidden">
+            <h2>Your shopping recommendation</h2>
+            <div id="recommendationContent"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>ShopMind AI · Autonomous Multi-Agent Shopping Assistant</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
